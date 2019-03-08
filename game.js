@@ -22,6 +22,10 @@ let monsterYdir = 1
 let monsterCaught = 0
 
 
+let startTime = Date.now();
+const SECONDS_PER_ROUND = 20;
+let elapsedTime = 0;
+
 
 function setup() {
     
@@ -30,7 +34,7 @@ function setup() {
           // show the background image
           bgReady = true;
         };
-        bgImage.src = "images/background1.jpg";
+        bgImage.src = "images/background2.jpg";
 
         //All the hero images
         heroImage = new Image(20,20);
@@ -92,6 +96,8 @@ function setup() {
   }
 
 function update() {
+  // Update the time.
+  elapsedTime = Math.floor((Date.now() - startTime) / 1000);
     // If right arrow is pressed, move 
     // the square to the right.
     if(keysPressed[39] == true) { // 39 is right key
@@ -103,6 +109,19 @@ function update() {
     } if(keysPressed[38] == true) { //38 is up key
       heroY -= 5;
     }
+
+    //trying to do the pause
+    // if (keysPressed == 32) pauseGame();
+    // function pauseGame() {
+    //   if (!gamePaused) {
+    //     game = clearTimeout(game);
+    //     gamePaused = true;
+    //   } else if (gamePaused) {
+    //     game = setTimeout(gameLoop, 1000 / 30);
+    //     gamePaused = false;
+    //     }
+    //   }
+
     //this one is to 4 walls block
     // heroX = Math.min(1200 - heroWide, heroX);
     // heroX = Math.max(0, heroX);
@@ -141,20 +160,17 @@ function update() {
     if ((monsterCaught % 4) == 0 || (monsterCaught % 6) == 0 || (monsterCaught - 1) == 0) {(monsterReady1 = false);(monsterReady2 = true);(monsterReady3 = false);(monsterReady4 = false) };
     if ((monsterCaught % 3) == 0 || (monsterCaught % 11) == 0 ) {(monsterReady1 = false);(monsterReady2 = false);(monsterReady3 = true);(monsterReady4 = false) };
     if ((monsterCaught % 5) == 0 || (monsterCaught % 13) == 0 ) {(monsterReady1 = false);(monsterReady2 = false);(monsterReady3 = false);(monsterReady4 = true) };
-
-
-
     }
   monsterX = monsterX + 5*monsterXdir
   monsterY = monsterY - 5*monsterYdir
-  if (monsterX + 100 > 1200) { monsterXdir = -monsterXdir }
+  if (monsterX + 120 > 1200) { monsterXdir = -monsterXdir }
   if (monsterY + 120 > 800) { monsterYdir = -monsterYdir }
   if (monsterX < 0) { monsterXdir = -monsterXdir }
   if (monsterY < 0) { monsterYdir = -monsterYdir }
 }
 
+
 function render() {
-    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     //this is for the images to be loaded
     if (bgReady) {
@@ -175,8 +191,8 @@ function render() {
     if (monsterReady4) {
       ctx.drawImage(monsterImage4, monsterX, monsterY);
     }
-
-    
+    ctx.fillText(`Seconds Remaining: ${SECONDS_PER_ROUND - elapsedTime}`, 1200, 150);
+    if ((SECONDS_PER_ROUND - elapsedTime) == 0 ) {alert ('you loss')}
     // this is for nothing just to see if the button is worked
 ctx.fillText("heroX: " + heroX, 1300, 30);
 ctx.fillText("heroY: " + heroY, 1400, 30);
@@ -187,5 +203,6 @@ ctx.font = " 20px cursive"
 ctx.fillText("You got: " + monsterCaught, 1350, 80);
 
   }
+  
 setup();
 main();
