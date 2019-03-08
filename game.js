@@ -1,20 +1,23 @@
 let canvas;
 let ctx;
 let keysPressed = {};
+let bgReady, heroReady, monsterReady1, monsterReady2, monsterReady3, monsterReady4;
+let bgImage, heroImage, monsterImage1, monsterImage2, monsterImage3, monsterImage4;
 //Square
-let squareWide = 10;
-let squareHigh = 10;
-let squareX = 200;
-let squareY = 200;
+let heroWide = 62;
+let heroHigh = 62;
+let heroX = 200;
+let heroY = 200;
 
-let bgReady, heroReady, monsterReady;
-let bgImage, heroImage, monsterImage;
 
 //Monster
-let monsterHigh = 20;
-let monsterWide = 20;
-let monsterX = (moX + Math.floor(Math.random()*(500-monsterWide)))
-let monsterY = (moY + Math.floor(Math.random()*(400-monsterHigh)))
+let monsterHigh = 120;
+let monsterWide = 120;
+let monsterX = Math.floor(Math.random()*(1200-monsterWide));
+let monsterY = Math.floor(Math.random()*(800-monsterHigh));
+let monsterXdir = 1;
+let monsterYdir = 1
+
 
 let monsterCaught = 0
 
@@ -22,32 +25,56 @@ let monsterCaught = 0
 
 function setup() {
     
-        // bgImage = new Image();
-        // bgImage.onload = function () {
-        //   // show the background image
-        //   bgReady = true;
-        // };
-        // bgImage.src = "images/background.png";
-        // heroImage = new Image();
-        // heroImage.onload = function () {
-        //   // show the hero image
-        //   heroReady = true;
-        // };
-        // heroImage.src = "images/hero.png";
+        bgImage = new Image();
+        bgImage.onload = function () {
+          // show the background image
+          bgReady = true;
+        };
+        bgImage.src = "images/background1.jpg";
+
+        //All the hero images
+        heroImage = new Image(20,20);
+        heroImage.onload = function () {
+          // show the hero image
+          heroReady = true;
+        };
+        heroImage.src = "images/hero1.png";
       
-        // monsterImage = new Image();
-        // monsterImage.onload = function () {
-        //   // show the monster image
-        //   monsterReady = true;
-        // };
-        // monsterImage.src = "images/monster.png";
-    
+
+        //
+        // ALL the monster Img
+        monsterImage1 = new Image(20,20);
+        monsterImage1.onload = function () {
+          monsterReady1 = false;
+        };
+        monsterImage1.src = "images/monster1.png";
+
+
+        monsterImage2 = new Image(20,20);
+        monsterImage2.onload = function () {
+          monsterReady = false;
+        };
+        monsterImage2.src = "images/monster2.png";
+
+        monsterImage3 = new Image(20,20);
+        monsterImage3.onload = function () {
+          monsterReady3 = false;
+        };
+        monsterImage3.src = "images/monster3.png";
+
+        monsterImage4 = new Image(20,20);
+        monsterImage4.onload = function () {
+          monsterReady4 = false;
+        };
+        monsterImage4.src = "images/monster4.png";
+
+
         
+
     canvas = document.createElement("canvas");
     ctx = canvas.getContext("2d");
-    canvas.width = 500;
-    canvas.height = 400;
-    
+    canvas.width = 1500;
+    canvas.height = 800;
     document.body.appendChild(canvas);
     
     addEventListener("keydown", function(key) {
@@ -68,73 +95,96 @@ function update() {
     // If right arrow is pressed, move 
     // the square to the right.
     if(keysPressed[39] == true) { // 39 is right key
-      squareX += 5;
-    } 
-    if(keysPressed[40] == true) { // 40 is down key
-      squareY += 5;
+      heroX += 5;
+    } if(keysPressed[40] == true) { // 40 is down key
+      heroY += 5;
+    } if(keysPressed[37] == true) { // 37 is left
+      heroX -= 5;
+    } if(keysPressed[38] == true) { //38 is up key
+      heroY -= 5;
     }
-    if(keysPressed[37] == true) { // 37 is left
-      squareX -= 5;
-    }
-    if(keysPressed[38] == true) { //38 is up key
-      squareY -= 5;
-    }
-    // squareX = Math.min(canvas.width - squareWide, squareX);
-    // squareX = Math.max(0, squareX);
-    // squareY = Math.min(canvas.height - squareHigh, squareY)
-    // squareY = Math.max(0,squareY)
-    if(squareX <= 0) {
-        squareX = canvas.width - squareWide
-    } if(squareX >= canvas.width) {
-        squareX = 0;
-    } if (squareY <= 0) {
-        squareY = canvas.height - squareHigh
-    } if (squareY >= canvas.height)
-      { squareY = 0 }
+    //this one is to 4 walls block
+    // heroX = Math.min(1200 - heroWide, heroX);
+    // heroX = Math.max(0, heroX);
+    // heroY = Math.min(canvas.height - heroHigh, heroY)
+    // heroY = Math.max(0,heroY)
 
+    //this is for walk thru walls
+    if(heroX <= 0) {
+        heroX = 1200 - heroWide
+    } if(heroX >= 1160) {
+        heroX = 0;
+    } if (heroY <= 0) {
+        heroY = canvas.height - heroHigh
+    } if (heroY >= canvas.height)
+      { heroY = 0 }
+
+    if ((monsterCaught == 0 || (monsterCaught - 2) == 0)) {(monsterReady1 = true);(monsterReady2 = false);(monsterReady3 = false);(monsterReady4 = false) };
 
     // Check if player and monster collided. Our images
   // are about 32 pixels big.
   if (
-    squareX <= (monsterX + monsterWide)
-    && monsterX <= (squareX + monsterWide)
-    && squareY <= (monsterY + monsterHigh)
-    && monsterY <= (squareY + squareHigh)
+    heroX <= (monsterX + monsterWide)
+    && monsterX <= (heroX + heroWide)
+    && heroY <= (monsterY + monsterHigh)
+    && monsterY <= (heroY + heroHigh)
   ) {
     // Pick a new location for the monster.
     // Note: Change this to place the monster at a new, random location.
-    monsterX = Math.floor(Math.random()*(500-monsterWide))
-    monsterY = Math.floor(Math.random()*(400-monsterHigh))
+    monsterX = Math.floor(Math.random()*(1200-monsterWide))
+    monsterY = Math.floor(Math.random()*(800-monsterHigh))
     monsterCaught = monsterCaught + 1;
-    squareWide = squareWide + 10;
+    // if ((monsterCaught - 1) == 0 || (monsterCaught - 5) == 0 || (monsterCaught - 8) == 0) {(monsterReady1 = false);(monsterReady2 = true);(monsterReady3 = false);(monsterReady4 = false) };
+    // if ((monsterCaught - 2) == 0 || (monsterCaught - 6) == 0 || (monsterCaught - 9) == 0) {(monsterReady1 = false);(monsterReady2 = false);(monsterReady3 = true);(monsterReady4 = false) };
+    // if ((monsterCaught - 3) == 0 || (monsterCaught - 7) == 0) {(monsterReady1 = false);(monsterReady2 = false);(monsterReady3 = false);(monsterReady4 = true) };
+    
+    if ((monsterCaught % 4) == 0 || (monsterCaught % 6) == 0 || (monsterCaught - 1) == 0) {(monsterReady1 = false);(monsterReady2 = true);(monsterReady3 = false);(monsterReady4 = false) };
+    if ((monsterCaught % 3) == 0 || (monsterCaught % 11) == 0 ) {(monsterReady1 = false);(monsterReady2 = false);(monsterReady3 = true);(monsterReady4 = false) };
+    if ((monsterCaught % 5) == 0 || (monsterCaught % 13) == 0 ) {(monsterReady1 = false);(monsterReady2 = false);(monsterReady3 = false);(monsterReady4 = true) };
+
+
+
     }
+  monsterX = monsterX + 5*monsterXdir
+  monsterY = monsterY - 5*monsterYdir
+  if (monsterX + 100 > 1200) { monsterXdir = -monsterXdir }
+  if (monsterY + 120 > 800) { monsterYdir = -monsterYdir }
+  if (monsterX < 0) { monsterXdir = -monsterXdir }
+  if (monsterY < 0) { monsterYdir = -monsterYdir }
 }
 
 function render() {
     
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //this is for the images to be loaded
+    if (bgReady) {
+        ctx.drawImage(bgImage,0,0);
+    } 
+    if (heroReady) {
+        ctx.drawImage(heroImage, heroX, heroY);
+    } 
+    if (monsterReady1) {
+        ctx.drawImage(monsterImage1, monsterX, monsterY);
+    }
+    if (monsterReady2) {
+      ctx.drawImage(monsterImage2, monsterX, monsterY);
+    }
+    if (monsterReady3) {
+      ctx.drawImage(monsterImage3, monsterX, monsterY);
+    }
+    if (monsterReady4) {
+      ctx.drawImage(monsterImage4, monsterX, monsterY);
+    }
 
-    ctx.fillStyle = "#FF0000";
-    ctx.fillRect(monsterX, monsterY, monsterWide, monsterHigh);
-
-    ctx.fillStyle = "#000000";
-    ctx.fillRect(squareX, squareY, squareWide, squareHigh);
-    // if (bgReady) {
-        // ctx.drawImage(bgImage, );
-    //   }
-    //   if (heroReady) {
-    //     ctx.drawImage(heroImage, heroX, heroY);
-    //   }
-    //   if (monsterReady) {
-    //     ctx.drawImage(monsterImage, monsterX, monsterY);
-    //   }
     
     // this is for nothing just to see if the button is worked
-ctx.fillText("squareX: " + squareX, 10, 30);
-ctx.fillText("squareY: " + squareY, 80, 30);
-ctx.fillText("monsterX: " + monsterX, 10, 50);
-ctx.fillText("monsterY: " + monsterY, 80, 50);
-ctx.fillText("You got: " + monsterCaught, 10, 80);
+ctx.fillText("heroX: " + heroX, 1300, 30);
+ctx.fillText("heroY: " + heroY, 1400, 30);
+ctx.fillText("monsterX: " + monsterX, 1300, 50);
+ctx.fillText("monsterY: " + monsterY, 1400, 50);
+
+ctx.font = " 20px cursive"
+ctx.fillText("You got: " + monsterCaught, 1350, 80);
 
   }
 setup();
