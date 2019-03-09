@@ -5,9 +5,14 @@ Created by: J
 Link to the game: https://eatem-all.netlify.com  
 This is a simple Canvas-based game that requires a solid understanding of the principles of JavaScript programming to customize. 
 
-## Video Walkthrough
+## Instruction
 
 Here's a walkthrough of implemented user stories.
+
+The code monster is devouring me piece by piece. Help me not to be catched by the code monster.
+Monster is evolved every 5 second.
+There are 6 levels in total of 30 seconds.
+Beat the boss and I will have time to spend with my princess just like Mario.
 
 ```
 <img src='http://http://g.recordit.co/cURdPMSHT2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
