@@ -7,12 +7,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="game.css">
     <link rel="icon" href="images/hero2.png" sizes="16"/>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-<body>
-    
+<body class="bgcl text-light">
+    <div class="container border border-light instruction col-12">
+        <p class="text-light"> <span class="bold font-weight-bold">Instruction:</span>
+            The code monster is devouring me piece by piece. Help me not to be catched by the code monster.<br/>
+            Monster is evolved every 5 second.
+            There are 6 levels in total of 30 seconds. <br/>
+            Beat the boss and I will have time to spend with my princess just like mr. Mario
+        
+        </p>
+    </div>
+    <div class="container row">
+            <div class="container col-4">
+                <div class="section1 text-center">
+                    <p>Time Remaining</p>
+                    <p id="timer"></p>
+                </div>
 
+                <div class="section2 text-center">
+                    <p>Current Level</p>
+                    <p id="level"></p>
+                </div>
 
+                <div class="row section3 ">
+                        <iframe src="mp3/silence.mp3" allow="autoplay" id="audio" style="display:none"></iframe>
+                        <audio id="bgsound" autoplay>
+                            <source src="mp3/bgmusic.mp3"/>
+                        </audio>
+                    <button id="mute" type="button" class="btn btn-light border-dark roundedleft col-6 my-1"><img class="mutebutton" src = "images/mute.png"></button>
+                    <button id="unmute" type="button" class="btn btn-light border-dark roundedright col-6 my-1"><img class="mutebutton" src = "images/unmute.png"></button>
+                    <br/>
+                    <button id="restart" type="button" class="btn roundedcircle btn-outline-light col-12 my-1"><img class="mutebutton" src = "images/restart.png"></button>
+                </div>
+                
+                <div class="section4 text-center">
+                    <p>Longest alive time:</p>
+                    <p id="highest"></p>
+                </div>
+
+            </div>
+
+            <div class="container col-8">
+                    <canvas></canvas>
+            </div>
+                
+               
+    </div>
 <script src="game.js"></script>   
 </body>
 </html>
