@@ -2,6 +2,8 @@
 
 Created by: J
 
+*https://get-a-gf.netlify.com/game.html*
+
 This is a simple Canvas-based game that requires a solid understanding of the principles of JavaScript programming to customize. 
 
 ## Instruction
