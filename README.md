@@ -5,7 +5,7 @@ Created by: J
 This is a simple Canvas-based game that requires a solid understanding of the principles of JavaScript programming to customize. 
 
 ## Instruction
-![](https://imgflip.com/gif/2vojrr)
+![](images/instr.gif)
 
 The code monster is devouring me piece by piece. Help me not to escape the code monster.
 Monster is evolved every 5 second.
