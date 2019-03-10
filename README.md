@@ -5,12 +5,13 @@ Created by: J
 This is a simple Canvas-based game that requires a solid understanding of the principles of JavaScript programming to customize. 
 
 ## Instruction
-```
-The code monster is devouring me piece by piece. Help me not to be catched by the code monster.
+![](https://imgflip.com/gif/2vojrr)
+
+The code monster is devouring me piece by piece. Help me not to escape the code monster.
 Monster is evolved every 5 second.
 There are 6 levels in total of 30 seconds.
 Beat the boss and I will have time to spend with my princess just like Mario.
-```
+
 
 ## Code Reviews
 
@@ -46,13 +47,17 @@ This code was reviewed by @username and @otherusername.
 
 The following **additional** features are implemented:
 
-* [ ] List anything else that you can get done to improve the page!
+* [X] List anything else that you can get done to improve the page!
+- Have more levels and more way to play the game.
+- Player can compete.
 
 ## Time Spent and Lessons Learned
 
-Time spent: **X** hours spent in total.
+Time spent: **30** hours spent in total.
 
-Describe any challenges encountered while building the app.
+```
+The game was really fun to work on. It helps me to understand some very basic principles of Javascript canvas. I was not able to realize which part should be prioritized and that was why I could not estimate the ETA.
+```
 
 ## License
 
