@@ -8,7 +8,7 @@ let higharr = [];
 let y = 0;
 
 
-
+ 
 let canvas;
 let ctx;
 let keysPressed = {};
@@ -36,7 +36,6 @@ let monsterCaught = 0
 let startTime = Date.now();
 let SECONDS_PER_ROUND = 30;
 let elapsedTime = 0;
-
 
 function setup() {
     
@@ -72,11 +71,14 @@ function setup() {
           document.getElementById('bgsound').muted = false;
         };
 
-        // restart.onclick = function()
-        // {
-        //   SECONDS_PER_ROUND = 30;
-        //   elapsedTime = 0;
-        // }
+        restart.onclick = function()
+        {startTime = Date.now()
+          SECONDS_PER_ROUND = 30;
+          elapsedTime = 0;
+          monsterX = Math.floor(Math.random()*(1200-monsterWide));
+          monsterY = Math.floor(Math.random()*(800-monsterHigh));
+      
+        }
     
         // monsterImage2 = new Image(20,20);
         // monsterImage2.onload = function () {
@@ -139,6 +141,9 @@ function update() {
       heroY -= 5;
     }
 
+  monsterX = monsterX + x*monsterXdir
+  monsterY = monsterY - x*monsterYdir
+
     
 
 
@@ -162,36 +167,9 @@ function update() {
     } if (heroY >= canvas.height)
       { heroY = 0 }
 
-
+      
     // Check if hero and monster collided. Our images
   // are about 32 pixels big.
-  if (
-    heroX <= (monsterX + monsterWide)
-    && monsterX <= (heroX + heroWide)
-    && heroY <= (monsterY + monsterHigh)
-    && monsterY <= (heroY + heroHigh)
-  ) {
-    // Pick a new location for the monster.
-    // Note: Change this to place the monster at a new, random location.
-    monsterX = Math.floor(Math.random()*(1200-monsterWide))
-    monsterY = Math.floor(Math.random()*(800-monsterHigh))
-      
-    alert (`too bad. try again`)  //should change to use a message in html. this alert too annoying
-    
-    //to show highest score in the screen
-      higharr.push(elapsedTime).
-      var bestScore = Math.min(...highest);
-      highest.innerText = `your best: ${bestScore} s`
-      
-      
-    location.reload();
-    // monsterCaught = monsterCaught + 1;
-    // higharr.push(elapsedTime); 
-    // highest.innerHTML = (`${higharr.}`);
-  //   for (let i = 0; i < higharr.length; i++) {
-  //     if (higharr[i] > y) {highest.innerHTML = (`${higharr[y]}`)} 
-  //   }
-  }
 
   //this is to change the icon
       // if ((monsterCaught == 0 || (monsterCaught - 2) == 0)) {(monsterReady1 = true);(monsterReady2 = false);(monsterReady3 = false);(monsterReady4 = false) };
@@ -204,8 +182,7 @@ function update() {
     // if ((monsterCaught % 5) == 0 || (monsterCaught % 13) == 0 ) {(monsterReady1 = false);(monsterReady2 = false);(monsterReady3 = false);(monsterReady4 = true) };
     // }
 
-  monsterX = monsterX + x*monsterXdir
-  monsterY = monsterY - x*monsterYdir
+  
   if (monsterX + 120 > 1200) { monsterXdir = -monsterXdir }
   if (monsterY + 120 > 800) { monsterYdir = -monsterYdir }
   if (monsterX < 0) { monsterXdir = -monsterXdir }
@@ -219,7 +196,28 @@ function update() {
   if ( 15 >= (SECONDS_PER_ROUND - elapsedTime) && (SECONDS_PER_ROUND - elapsedTime) > 10 ) {(x = 20);   monsterImage1.src = "images/monster4.png"; monsterCaught = 4; }
   if ( 10 >=(SECONDS_PER_ROUND - elapsedTime) && (SECONDS_PER_ROUND - elapsedTime) > 5   ) {(x = 25);   monsterImage1.src = "images/monster5.png"; monsterCaught = 5; }
   if ( 5 >= (SECONDS_PER_ROUND - elapsedTime) && (SECONDS_PER_ROUND - elapsedTime) > 0   ) {(x= 30);    monsterImage1.src = "images/monster6.png"; monsterCaught = 6; }
- 
+  
+  if (
+    heroX <= (monsterX + monsterWide)
+    && monsterX <= (heroX + heroWide)
+    && heroY <= (monsterY + monsterHigh)
+    && monsterY <= (heroY + heroHigh)
+  ) {
+    // Pick a new location for the monster.
+    // Note: Change this to place the monster at a new, random location.
+    monsterX = Math.floor(Math.random()*(1200-monsterWide));
+    monsterY = Math.floor(Math.random()*(800-monsterHigh));
+    // alert (`too bad. try again`)  //should change to use a message in html. this alert too annoying
+    monsterCaught = -1;
+    SECONDS_PER_ROUND =0;
+    //to show highest score in the screen
+      higharr.push(elapsedTime);
+      var bestScore = Math.max(...higharr);
+      highest.innerHTML = (`${bestScore}s`)
+
+  
+  }
+
 }
 
 
@@ -253,16 +251,58 @@ function render() {
     timer.innerHTML = (`${SECONDS_PER_ROUND - elapsedTime}`);
     level.innerHTML = (`${monsterCaught}`)
 // ctx.fillText(`Seconds Remaining: ${SECONDS_PER_ROUND - elapsedTime}`, 1200, 150);
-    if ((SECONDS_PER_ROUND - elapsedTime) == 0) {alert ('You Win... This Time')
-    location.reload();}
+    if ( (SECONDS_PER_ROUND - elapsedTime) < 0
+      && (monsterCaught == 6)
+    ) {
+      ctx.fillStyle = "black";
+    ctx.fillRect(0,300, canvas.width, 130);
+
+    ctx.font = "100px Comic Sans MS";
+    ctx.fillStyle = "white";
+    ctx.fillText("You Win ... This time!", 100, 400);
+    monsterX = 400; heroX = 600;
+    monsterY = 120; heroY = 100;
+    heroImage.src = "images/hero2.png";
+  }
+
+  if ( (monsterCaught == -1)  )
+  {
+    // (SECONDS_PER_ROUND - elapsedTime) =
+    ctx.fillStyle = "black";
+    ctx.fillRect(0,300, canvas.width, 250);
+
+    ctx.font = "100px Comic Sans MS";
+    ctx.fillStyle = "#f1d538";
+    ctx.fillText("You noob!", 400, 400);
+    ctx.fillText("Try harder next time!", 100, 500)
+    monsterX = 400; heroX = 600;
+    monsterY = 120; heroY = 100;
+    heroImage.src = "images/hero2.png";
+    timer.innerHTML = (`0`);
+    level.innerHTML = (`0`);
+
+  }
+
+if ((SECONDS_PER_ROUND - elapsedTime) % 5 == 0 && (SECONDS_PER_ROUND - elapsedTime) != 30 && (SECONDS_PER_ROUND - elapsedTime) >5) {
+ctx.font = "200px Comic Sans MS";
+ctx.fillStyle = "#ff0000a8";
+ctx.fillText("EVOLVED!", 120, 200);
+}
+
+if ((SECONDS_PER_ROUND - elapsedTime) == 5) {
+  ctx.font = "300px Comic Sans MS";
+  ctx.fillStyle = "red";
+  ctx.fillText("BOSS!!!", 50, 500);
+  }
     // this is for nothing just to see if the button is worked
 // ctx.fillText("heroX: " + heroX, 1300, 30);
 // ctx.fillText("heroY: " + heroY, 1400, 30);
 // ctx.fillText("monsterX: " + monsterX, 1300, 50);
 // ctx.fillText("monsterY: " + monsterY, 1400, 50);
+    
 
-// ctx.font = " 20px cursive"
-// ctx.fillText("You are at level: " + monsterCaught, 1350, 80);
+
+
   }
 
 
