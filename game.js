@@ -175,7 +175,15 @@ function update() {
     // Note: Change this to place the monster at a new, random location.
     monsterX = Math.floor(Math.random()*(1200-monsterWide))
     monsterY = Math.floor(Math.random()*(800-monsterHigh))
-    alert (`too bad. try again`)
+      
+    alert (`too bad. try again`)  //should change to use a message in html. this alert too annoying
+    
+    //to show highest score in the screen
+      higharr.push(elapsedTime).
+      var bestScore = Math.min(...highest);
+      highest.innerText = `your best: ${bestScore} s`
+      
+      
     location.reload();
     // monsterCaught = monsterCaught + 1;
     // higharr.push(elapsedTime); 
