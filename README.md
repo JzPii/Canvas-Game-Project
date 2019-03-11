@@ -1,4 +1,4 @@
-# CoderSchool FTW - *Go get a Girlfriend*
+# CoderSchool FTW - *Run, run away!!*
 
 Created by: J
 
@@ -9,7 +9,7 @@ This is a simple Canvas-based game that requires a solid understanding of the pr
 ## Instruction
 ![](images/instr.gif)
 
-The code monster is devouring me piece by piece. Help me not to escape the code monster.
+The code monster is devouring me piece by piece. Help me to escape them.
 Monster is evolved every 5 second.
 There are 6 levels in total of 30 seconds.
 Beat the boss and I will have time to spend with my princess just like Mario.
